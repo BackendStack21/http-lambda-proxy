@@ -1,0 +1,34 @@
+{
+  "name": "http-lambda-proxy",
+  "version": "1.0.0",
+  "description": "Proxy HTTP requests to AWS Lambda",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkyberneees/http-lambda-proxy.git"
+  },
+  "keywords": [
+    "http",
+    "proxy",
+    "aws",
+    "lambda"
+  ],
+  "author": "Rolando Santamaria Maso <kyberneees@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jkyberneees/http-lambda-proxy/issues"
+  },
+  "homepage": "https://github.com/jkyberneees/http-lambda-proxy#readme",
+  "dependencies": {
+    "aws-sdk": "^2.648.0",
+    "fast-url-parser": "^1.1.3"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "restana": "^4.2.0",
+    "standard": "^14.3.3"
+  }
+}
