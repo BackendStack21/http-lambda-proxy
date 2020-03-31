@@ -19,7 +19,7 @@ const proxy = lambdaProxy({
 
 const service = require('restana')()
 service.all('/*', (req, res) => { 
-    proxy(req, res, req.url, {}))
+  proxy(req, res, req.url, {}))
 }) 
 
 service.start(8080)
