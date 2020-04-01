@@ -7,8 +7,8 @@ module.exports = ({
   region, // lambda AWS region
   target, // the name of the Lambda function, version, or alias.
   logType = 'None', // set to "Tail" to include the execution log in the response
-  qualifier, // specify a version or alias to invoke a published version of the function
-  clientContext, // up to 3583 bytes of base64-encoded data about the invoking client to pass to the function in the context object
+  qualifier = null, // specify a version or alias to invoke a published version of the function
+  clientContext = null, // up to 3583 bytes of base64-encoded data about the invoking client to pass to the function in the context object
   lambdaProxy = getLambdaProxy(region) // AWS lambda invocation proxy
 }) => {
   return (req, res, url, opts) => {
@@ -34,6 +34,9 @@ module.exports = ({
 
     lambdaProxy(params, (err, response) => {
       if (err) {
+        if (err.message.startsWith('Function not found:')) {
+          err.statusCode = 503
+        }
         res.statusCode = err.statusCode
         res.end(err.message)
       } else {
