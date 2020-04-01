@@ -1,3 +1,4 @@
 .env
 tests/
 demos/
+.nyc_output
