@@ -9,7 +9,8 @@ module.exports = ({
   logType = 'None', // set to "Tail" to include the execution log in the response
   qualifier = null, // specify a version or alias to invoke a published version of the function
   clientContext = null, // up to 3583 bytes of base64-encoded data about the invoking client to pass to the function in the context object
-  lambdaProxy = getLambdaProxy(region) // AWS lambda invocation proxy
+  sdkConfig = {}, // other AWS SDK config for Lambda constructor https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Lambda.html
+  lambdaProxy = getLambdaProxy(Object.assign({ region }, sdkConfig)) // AWS lambda invocation proxy
 }) => {
   return (req, res, url, opts) => {
     const onResponse = opts.onResponse
@@ -74,10 +75,8 @@ function headersNoOp (headers) {
   return headers
 }
 
-function getLambdaProxy (region) {
-  const lambda = new AWS.Lambda({
-    region
-  })
+function getLambdaProxy (config) {
+  const lambda = new AWS.Lambda(config)
 
   return (params, cb) => lambda.invoke(params, cb)
 }
