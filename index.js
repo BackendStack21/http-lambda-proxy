@@ -4,13 +4,15 @@ const URL = require('fast-url-parser')
 const invocationType = 'RequestResponse'
 
 module.exports = ({
-  region, // lambda AWS region
   target, // the name of the Lambda function, version, or alias.
   logType = 'None', // set to "Tail" to include the execution log in the response
   qualifier = null, // specify a version or alias to invoke a published version of the function
   clientContext = null, // up to 3583 bytes of base64-encoded data about the invoking client to pass to the function in the context object
-  lambdaProxy = getLambdaProxy(region) // AWS lambda invocation proxy
+  lambdaProxy, // AWS lambda invocation proxy
+  ...lambdaProxyArgs,
 }) => {
+  lambdaProxy = lambdaProxy || getLambdaProxy(lambdaProxyArgs)
+  
   return (req, res, url, opts) => {
     const onResponse = opts.onResponse
     const rewriteHeaders = opts.rewriteHeaders || headersNoOp
@@ -74,10 +76,8 @@ function headersNoOp (headers) {
   return headers
 }
 
-function getLambdaProxy (region) {
-  const lambda = new AWS.Lambda({
-    region
-  })
+function getLambdaProxy (config) {
+  const lambda = new AWS.Lambda(config)
 
   return (params, cb) => lambda.invoke(params, cb)
 }
