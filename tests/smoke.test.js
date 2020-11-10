@@ -65,6 +65,33 @@ describe('Smoke Test Suite', () => {
       })
   })
 
+  it('should 500 on GET /service/unhandled', async () => {
+    await request(gHttpServer)
+      .get('/service/unhandled')
+      .expect(500)
+      .then((res) => {
+        expect(res.text).to.equal('ReferenceError:x is not defined')
+      })
+  })
+
+  it('should 200 on GET /service/unformatted', async () => {
+    await request(gHttpServer)
+      .get('/service/unformatted')
+      .expect(200)
+      .then((res) => {
+        expect(res.body).to.deep.equal({})
+      })
+  })
+
+  it('should 200 on GET /service/nojson', async () => {
+    await request(gHttpServer)
+      .get('/service/nojson')
+      .expect(500)
+      .then((res) => {
+        res.text = 'Lambda did not responded using JSON format!'
+      })
+  })
+
   it('close all', async () => {
     await gateway.close()
   })

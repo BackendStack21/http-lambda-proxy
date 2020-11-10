@@ -9,10 +9,10 @@ module.exports = ({
   qualifier = null, // specify a version or alias to invoke a published version of the function
   clientContext = null, // up to 3583 bytes of base64-encoded data about the invoking client to pass to the function in the context object
   lambdaProxy, // AWS lambda invocation proxy
-  ...lambdaProxyArgs,
+  ...lambdaProxyArgs
 }) => {
   lambdaProxy = lambdaProxy || getLambdaProxy(lambdaProxyArgs)
-  
+
   return (req, res, url, opts) => {
     const onResponse = opts.onResponse
     const rewriteHeaders = opts.rewriteHeaders || headersNoOp
@@ -41,12 +41,29 @@ module.exports = ({
         }
         res.statusCode = err.statusCode
         res.end(err.message)
+      } else if (response.FunctionError === 'Unhandled') {
+        // https://docs.aws.amazon.com/lambda/latest/dg/nodejs-exceptions.html
+        const { errorType, errorMessage } = JSON.parse(response.Payload)
+        res.statusCode = 500
+        res.end(`${errorType}:${errorMessage}`)
       } else {
-        const { headers, statusCode, body } = JSON.parse(response.Payload)
-        copyHeaders(
-          rewriteHeaders(headers),
-          res
-        )
+        let jsonPayload
+        try {
+          jsonPayload = JSON.parse(response.Payload)
+        } catch (err) {
+          res.statusCode = 500
+          res.end('Lambda did not responded using JSON format!')
+
+          return
+        }
+
+        const { headers, statusCode = response.StatusCode, body } = jsonPayload
+        if (headers) {
+          copyHeaders(
+            rewriteHeaders(headers),
+            res
+          )
+        }
 
         if (onResponse) {
           onResponse(req, res, response)
