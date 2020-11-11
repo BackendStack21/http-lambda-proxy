@@ -88,7 +88,7 @@ describe('Smoke Test Suite', () => {
       .get('/service/nojson')
       .expect(500)
       .then((res) => {
-        res.text = 'Lambda did not responded using JSON format!'
+        res.text = 'Lambda not responded using JSON format!'
       })
   })
 

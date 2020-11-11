@@ -52,7 +52,7 @@ module.exports = ({
           jsonPayload = JSON.parse(response.Payload)
         } catch (err) {
           res.statusCode = 500
-          res.end('Lambda did not responded using JSON format!')
+          res.end('Lambda not responded using JSON format!')
 
           return
         }
