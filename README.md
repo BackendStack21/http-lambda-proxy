@@ -1,7 +1,7 @@
 # http-lambda-proxy
 Proxy HTTP requests to AWS Lambda.  
 
-Requests format are compatible with the `serverless-http` module, allowing developers to run downstream REST/HTTP services inside lambda funtions as well.
+Requests format is compatible with the `serverless-http` module, allowing developers to run full featured REST/HTTP services as lambda funtions.
 
 ## Install
 ```js
