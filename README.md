@@ -90,4 +90,13 @@ The following alternatives describe the supported response formats:
 MIT
 
 ## Sponsors
-- Kindly sponsored by [ShareNow](https://www.share-now.com/), a company that promotes innovation! 
+- (INACTIVE) Kindly sponsored by [ShareNow](https://www.share-now.com/), a company that promotes innovation! 
+
+## Support / Donate 💚
+You can support the maintenance of this project: 
+- Paypal: https://www.paypal.me/kyberneees
+- NANO Crypto Coin: `nano_3zm9steh8mb374f8be3rbytqhgzzarczhwtxhihkqt83a4m46oa3xidfiauc`
+- XRP Crypto Coin: `rarQgNuiqF9gFLLwd5fdku4jYa9EXpiyCp`
+- TRON Crypto Coin: `TJ5Bbf9v4kpptnRsePXYDvnYcYrS5Tyxus`
+- BITCOIN Crypto Coin: `bc1qcrr58venyh54ztvkqym39p9rhnxg4308t0802f`
+- Ethereum Crypto Coin: `0xD73c8E63a83eBD8Df3fB3d0090f1fe7a1eEB980B`
