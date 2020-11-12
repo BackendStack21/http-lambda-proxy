@@ -66,19 +66,19 @@ Called to rewrite the headers of the response, before them being copied over to 
 The following alternatives describe the supported response formats:
 - Ideally, your lambda function is implemented using the [serverless-http module](https://github.com/dougmoscrop/serverless-http)
 - Your lambda respond using a JSON Payload with the following format:
-  ```json
+  ```js
   {
     "headers": {
-      ...
+      // ...
     },
     "statusCode": 200,
-    "body": ...
+    "body": // ...
   }
   ```
 - Your lambda respond with a JSON Payload:
   ```js
   exports.handler = async function () {
-    return JSON.stringigy({})
+    return JSON.stringify({})
   }
   ```
 
