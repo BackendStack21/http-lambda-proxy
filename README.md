@@ -41,6 +41,7 @@ Specify a version or alias to invoke a published version of the function.
 Up to 3583 bytes of base64-encoded data about the invoking client to pass to the function in the context object.
 #### lambdaProxy
 Function wrapper to AWS Lambda invocation proxy. Allows to overwrite default implementation.
+> Any other AWS.Lambda constructor option is allowed: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Lambda.html
 
 ---
 More details on `aws-sdk / lambda / invoke`: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Lambda.html#invoke-property
@@ -60,6 +61,26 @@ Called when the remote lambda response is received. If defined, default behavior
 
 #### rewriteHeaders(headers)
 Called to rewrite the headers of the response, before them being copied over to the outer response. It must return the new headers object.
+
+## Supported response formats
+The following alternatives describe the supported response formats:
+- Ideally, your lambda function is implemented using the [serverless-http module](https://github.com/dougmoscrop/serverless-http)
+- Your lambda respond using a JSON Payload with the following format:
+  ```json
+  {
+    "headers": {
+      ...
+    },
+    "statusCode": 200,
+    "body": ...
+  }
+  ```
+- Your lambda respond with a JSON Payload:
+  ```js
+  exports.handler = async function () {
+    return JSON.stringigy({})
+  }
+  ```
 
 ## Related topics
 - fast-gateway: https://www.npmjs.com/package/fast-gateway

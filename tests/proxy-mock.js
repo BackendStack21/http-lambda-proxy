@@ -1,6 +1,6 @@
 module.exports = (params, cb) => {
   const { Payload } = params
-  const { path, body, httpMethod, headers, queryStringParameters } = JSON.parse(Payload)
+  const { path, body, httpMethod } = JSON.parse(Payload)
 
   switch (httpMethod + ' ' + path) {
     case 'GET /service/get': {
@@ -46,6 +46,31 @@ module.exports = (params, cb) => {
             'x-agent': 'http-lambda-proxy'
           }
         }),
+        StatusCode: 200
+      })
+      break
+    }
+    case 'GET /service/unhandled': {
+      cb(null, {
+        FunctionError: 'Unhandled',
+        Payload: JSON.stringify({
+          errorType: 'ReferenceError',
+          errorMessage: 'x is not defined'
+        }),
+        StatusCode: 200
+      })
+      break
+    }
+    case 'GET /service/unformatted': {
+      cb(null, {
+        Payload: JSON.stringify({}),
+        StatusCode: 200
+      })
+      break
+    }
+    case 'GET /service/nojson': {
+      cb(null, {
+        Payload: '',
         StatusCode: 200
       })
       break
