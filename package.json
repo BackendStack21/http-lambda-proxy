@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/jkyberneees/http-lambda-proxy#readme",
   "dependencies": {
-    "aws-sdk": "^2.648.0",
+    "aws-sdk": "^2.799.0",
     "fast-url-parser": "^1.1.3"
   },
   "devDependencies": {
