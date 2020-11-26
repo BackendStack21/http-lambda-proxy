@@ -63,7 +63,9 @@ module.exports = (params, cb) => {
     }
     case 'GET /service/unformatted': {
       cb(null, {
-        Payload: JSON.stringify({}),
+        Payload: JSON.stringify({
+          body: 'Hello World!'
+        }),
         StatusCode: 200
       })
       break

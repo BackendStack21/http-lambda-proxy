@@ -75,10 +75,12 @@ The following alternatives describe the supported response formats:
     "body": // ...
   }
   ```
-- Your lambda respond with a JSON Payload:
+- Your lambda respond with a JSON Payload and it contains a `body` property:
   ```js
   exports.handler = async function () {
-    return JSON.stringify({})
+    return JSON.stringify({
+      body: "Hello World!"
+    })
   }
   ```
 

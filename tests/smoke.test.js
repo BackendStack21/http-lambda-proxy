@@ -79,7 +79,7 @@ describe('Smoke Test Suite', () => {
       .get('/service/unformatted')
       .expect(200)
       .then((res) => {
-        expect(res.body).to.deep.equal({})
+        expect(res.text).to.deep.equal('Hello World!')
       })
   })
 
