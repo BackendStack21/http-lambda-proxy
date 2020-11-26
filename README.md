@@ -1,7 +1,8 @@
 # http-lambda-proxy
-Proxy HTTP requests to AWS Lambda.  
+Node.js library that allows to proxy HTTP requests to AWS Lambda functions. The goal is to empower developers to consider step by step migration of endpoints/workflows and even fully featured HTTP/REST services into serverless.
 
-Requests format is compatible with the `serverless-http` module, allowing developers to run full featured REST/HTTP services as lambda funtions.
+## What is AWS Lambda?
+[![AWS Lambda](https://img.youtube.com/vi/eOBq__h4OJ4/0.jpg)](https://www.youtube.com/watch?v=eOBq__h4OJ4 "AWS Lambda")
 
 ## Install
 ```js
@@ -9,7 +10,7 @@ npm i http-lambda-proxy
 ```
 
 ## Usage
-The following examples describe how to use `http-lambda-proxy` with `restana`:
+The following example describe how to use `http-lambda-proxy` with `restana`:
 ```js
 const lambdaProxy = require('http-lambda-proxy')
 const proxy = lambdaProxy({
@@ -24,8 +25,29 @@ service.all('/*', (req, res) => {
 
 service.start(8080)
 ```
-> In this example, we proxy all http requests on port 8080 to 
-an AWS Lambda.
+> In this example, we proxy all http requests on port 8080 to an AWS Lambda function.
+
+### Example lambda function implementation:
+```js
+const serverless = require('serverless-http')
+const json = require('serverless-json-parser')
+const query = require('connect-query')
+
+const service = require('restana')()
+service.use(query())
+service.use(json())
+
+// routes
+service.get('/get', (req, res) => {
+  res.send({ msg: 'Go Serverless!' })
+})
+service.post('/post', (req, res) => {
+  res.send(req.body)
+})
+
+// export handler
+module.exports.handler = serverless(service)
+```
 
 ## API
 ### Options
@@ -64,7 +86,7 @@ Called to rewrite the headers of the response, before them being copied over to 
 
 ## Supported response formats
 The following alternatives describe the supported response formats:
-- Ideally, your lambda function is implemented using the [serverless-http module](https://github.com/dougmoscrop/serverless-http)
+- Ideally, your lambda function is implemented using the [serverless-http module](https://github.com/dougmoscrop/serverless-http), so you can run fully featured Node.js REST/HTTP services as AWS Lambda funtions. 
 - Your lambda respond using a JSON Payload with the following format:
   ```js
   {
@@ -83,6 +105,7 @@ The following alternatives describe the supported response formats:
     })
   }
   ```
+> The lambda function implementation is NOT restricted to Node.js, you can use any of the supported [AWS Lambda runtimes](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html).
 
 ## Related topics
 - fast-gateway: https://www.npmjs.com/package/fast-gateway
