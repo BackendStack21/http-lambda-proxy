@@ -16,7 +16,9 @@ module.exports = ({
   return (req, res, url, opts) => {
     const onResponse = opts.onResponse
     const rewriteHeaders = opts.rewriteHeaders || headersNoOp
-    const { _query, pathname } = URL.parse(url, true)
+
+    const shouldParseQueryString = typeof (req.query) !== 'object'
+    const { _query, pathname } = URL.parse(url, shouldParseQueryString)
 
     const params = {
       ClientContext: clientContext,
@@ -30,7 +32,7 @@ module.exports = ({
         httpMethod: req.method,
         path: pathname,
         isBase64Encoded: false,
-        queryStringParameters: _query
+        queryStringParameters: shouldParseQueryString ? _query : req.query
       })
     }
 

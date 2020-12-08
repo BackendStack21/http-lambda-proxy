@@ -42,8 +42,11 @@ describe('Smoke Test Suite', () => {
 
   it('should 200 on GET to valid remote endpoint', async () => {
     await request(gHttpServer)
-      .get('/service/get')
+      .get('/service/get?foo=bar')
       .expect(200)
+      .then((res) => {
+        expect(res.body.foo).to.equal('bar')
+      })
   })
 
   it('should 200 on POST to valid remote endpoint', async () => {
