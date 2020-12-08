@@ -1,14 +1,16 @@
 module.exports = (params, cb) => {
   const { Payload } = params
-  const { path, body, httpMethod } = JSON.parse(Payload)
+  const { path, body, httpMethod, queryStringParameters } = JSON.parse(Payload)
 
   switch (httpMethod + ' ' + path) {
     case 'GET /service/get': {
       cb(null, {
         Payload: JSON.stringify({
-          headers: {},
+          headers: {
+            'content-type': 'application/json'
+          },
           statusCode: 200,
-          body: 'Hello World!'
+          body: JSON.stringify(queryStringParameters)
         }),
         StatusCode: 200
       })

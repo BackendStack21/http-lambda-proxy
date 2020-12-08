@@ -30,7 +30,7 @@ module.exports = ({
         httpMethod: req.method,
         path: pathname,
         isBase64Encoded: false,
-        queryStringParameters: _query
+        queryStringParameters: typeof (req.query) === 'object' ? req.query : _query
       })
     }
 
